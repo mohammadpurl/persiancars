@@ -1,0 +1,27 @@
+# خودرو پرشین — استقرار استاتیک Next.js روی cPanel (Apache)
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+AddDefaultCharset utf-8
+
+DirectoryIndex index.html
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # فایل یا پوشهٔ موجود را همان‌طور سرو کن
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # مسیرهای بدون پسوند → فایل .html (مثلاً /services/periodic)
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
+
+  RewriteRule ^ /404.html [L]
+</IfModule>

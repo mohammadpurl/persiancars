@@ -1,0 +1,59 @@
+---
+alwaysApply: true
+---
+# Auto Car Repair Website — Design System Rules
+
+## Stack
+- Next.js 14 App Router
+- Tailwind CSS
+- Framer Motion for ALL animations
+- Mobile-first always
+
+## Design Language
+- Style: Glassmorphism + Dark luxury
+- Primary color: gold `#C9A227` (no red — accents use gold + bale teal)
+- Background: #0A0A0A (near black)
+- Glass: backdrop-blur-md bg-white/10 border border-white/20
+- Font: Inter (headings bold, body regular)
+- Radius: rounded-2xl for cards, rounded-full for buttons
+- Spacing: 8px base grid
+
+## Mobile Bottom Navigation Rule
+- On mobile: fixed bottom nav with glassmorphism
+- Height: 64px, backdrop-blur-xl, bg-black/60
+- Icons + labels, active state with primary color
+- NEVER use top hamburger menu on mobile
+
+## Hero Section Rule
+- Full viewport height
+- Dark car image as background (optimized WebP)
+- Glass cards floating over the image
+- Headline: large, bold, white
+- Sub: muted gray
+- CTA: Bale button (`bale-btn` — bg `#0a2221`, logo SVG) + gold booking button
+
+## Glass Card Recipe
+```css
+bg-white/10 backdrop-blur-md border border-white/20 
+rounded-2xl shadow-xl
+```
+
+## SEO Rules
+- Every page: unique <title>, <meta description>, OG tags
+- Use next-seo package
+- Persian + English content for bilingual SEO
+- Schema.org LocalBusiness markup in JSON-LD
+- Image alt tags always in Persian and English
+
+## Performance Rules
+- Images: next/image always, WebP format, lazy loading
+- No heavy libraries
+- Fonts: next/font/google
+- Keep bundle < 200KB initial
+
+## Trust Elements (always include)
+- Google rating display (4.8★)
+- Bale as primary messenger CTA
+- Phone number visible above fold on mobile
+- Address + map embed
+- Before/After gallery section
