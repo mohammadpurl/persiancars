@@ -1,6 +1,4 @@
-
-
-
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
@@ -54,11 +52,12 @@ const LatestNews = () => {
               className="border-border hover:border-primary transition-all duration-300 bg-card/50 backdrop-blur-sm card-hover"
             >
               <div className="aspect-video w-full overflow-hidden rounded-t-lg">
-                <img 
+                <Image
                   src={news.image} 
                   alt={news.title} 
                   width={300}
                   height={200}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>

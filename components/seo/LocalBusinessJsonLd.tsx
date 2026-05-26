@@ -1,4 +1,5 @@
 import { BRAND, CONTACT, LINKS } from "@/lib/constants";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export default function LocalBusinessJsonLd() {
   const jsonLd = {
@@ -10,7 +11,7 @@ export default function LocalBusinessJsonLd() {
     url: BRAND.siteUrl,
     telephone: `+98${CONTACT.phone.replace(/^0/, "")}`,
     email: CONTACT.email,
-    image: `${BRAND.siteUrl}/images/car-persian-clinic.jpeg`,
+    image: `${BRAND.siteUrl}${DEFAULT_OG_IMAGE.url}`,
     address: {
       "@type": "PostalAddress",
       streetAddress: CONTACT.address,
@@ -42,7 +43,7 @@ export default function LocalBusinessJsonLd() {
       ratingValue: CONTACT.rating,
       reviewCount: CONTACT.ratingCount,
     },
-    sameAs: [LINKS.instagram, LINKS.bale],
+    sameAs: [LINKS.instagram, LINKS.bale, LINKS.googleMaps],
   };
 
   return (

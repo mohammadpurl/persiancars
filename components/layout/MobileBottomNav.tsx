@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Wrench, ImageIcon, Phone } from "lucide-react";
+import { Home, Wrench, MapPin, Phone } from "lucide-react";
 import BaleButton from "@/components/ui/BaleButton";
 import { MOBILE_NAV } from "@/lib/constants";
 import { isNavLinkActive, useNavHash } from "@/lib/use-nav-active";
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const iconMap = {
   home: Home,
   services: Wrench,
-  portfolio: ImageIcon,
+  location: MapPin,
   contact: Phone,
 } as const;
 

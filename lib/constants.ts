@@ -37,7 +37,7 @@ export const LINKS = {
 export const NAV_LINKS = [
   { title: "صفحه اصلی", path: "/", hash: undefined },
   { title: "خدمات", path: "/#services", hash: "services" },
-  { title: "نمونه کار", path: "/#portfolio", hash: "portfolio" },
+  { title: "موقعیت", path: "/#location", hash: "location" },
   { title: "درباره ما", path: "/about" },
   { title: "تماس", path: "/contact" },
 ] as const;
@@ -46,7 +46,7 @@ export const MOBILE_NAV = [
   { title: "خانه", path: "/", icon: "home" as const },
   { title: "خدمات", path: "/#services", icon: "services" as const },
   { title: "بله", path: LINKS.bale, icon: "bale" as const, external: true },
-  { title: "نمونه کار", path: "/#portfolio", icon: "portfolio" as const },
+  { title: "موقعیت", path: "/#location", icon: "location" as const },
   { title: "تماس", path: "/contact", icon: "contact" as const },
 ] as const;
 

@@ -2,8 +2,13 @@ import Link from "next/link";
 import { Instagram, Phone, MapPin, Mail } from "lucide-react";
 import SiteLogo from "@/components/ui/SiteLogo";
 import { BRAND, CONTACT, LINKS, NAV_LINKS } from "@/lib/constants";
+import { SERVICES_CATALOG } from "@/lib/services-catalog";
 
 export default function Footer() {
+  const footerServices = SERVICES_CATALOG.filter((service) =>
+    ["engine-repair", "periodic", "oil-change", "transmission", "diagnostics"].includes(service.slug)
+  );
+
   return (
     <footer className="bg-card/50 border-t border-border mt-8 pt-12 pb-24 md:pb-8">
       <div className="container-site">
@@ -60,11 +65,16 @@ export default function Footer() {
           <div>
             <h3 className="type-h4 mb-4 text-foreground">خدمات</h3>
             <ul className="space-y-2 type-body-sm text-muted-foreground">
-              <li>تعمیر موتور</li>
-              <li>سرویس دوره‌ای</li>
-              <li>تعویض روغن</li>
-              <li>گیربکس اتومات</li>
-              <li>عیب‌یابی تخصصی</li>
+              {footerServices.map((service) => (
+                <li key={service.slug}>
+                  <Link
+                    href={service.href}
+                    className="hover:text-foreground transition-colors"
+                  >
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

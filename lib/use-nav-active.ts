@@ -18,8 +18,8 @@ export function useNavHash() {
 }
 
 /**
- * فقط یک آیتمنو فعال: در / بدون hash فقط «صفحه اصلی»،
- * با #services فقط «خدمات»، با #portfolio فقط «نمونه کار».
+ * فقط یک آیتم منو فعال: در / بدون hash فقط «صفحه اصلی»،
+ * با #services فقط «خدمات»، با #location فقط «موقعیت».
  */
 export function isNavLinkActive(
   pathname: string,

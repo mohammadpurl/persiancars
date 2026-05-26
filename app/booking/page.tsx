@@ -50,7 +50,8 @@ export default function BookingPage() {
 
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(0);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusType, setStatusType] = useState<"idle" | "success" | "error">("idle");
 
   const selectedDayLabel = selectedDayIndex !== null ? formatPersianDate(days[selectedDayIndex]) : "";
   const selectedSlotLabel = selectedSlotIndex !== null ? slots[selectedSlotIndex].label : "";
@@ -87,74 +88,100 @@ export default function BookingPage() {
       notes: values.notes?.trim() || undefined,
     };
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
       const res = await fetch(`${apiUrl}/bookings`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("Request failed");
-      setSubmitted(true);
+      setStatusType("success");
+      setStatusMessage(
+        `درخواست شما برای ${selectedDayLabel}، بازه ${selectedSlotLabel} ثبت شد. به‌زودی برای هماهنگی نهایی با شما تماس می‌گیریم.`
+      );
       reset();
     } catch {
-      alert("خطا در ثبت درخواست. لطفا دوباره تلاش کنید.");
+      setStatusType("error");
+      setStatusMessage("خطا در ثبت درخواست. لطفا دوباره تلاش کنید یا با مجموعه تماس بگیرید.");
     }
   }
 
   return (
     <section className="py-16" id="booking">
-      <div className="container  px-4 py-16">
-      <div className="container mx-auto px-4">
+      <div className="container-site py-16">
         <header className="mb-10 text-right">
-            <h2 className="text-3xl font-bold mb-4">
-                <span className="text-primary">رزرو </span>آنلاین
-            </h2>
-          <p className="text-muted-foreground max-w-2xl ">
-            برای یک هفته آینده، از ساعت ۹ صبح تا ۱۹، بازه‌های دو ساعته در دسترس است.
+          <h1 className="type-h1 mb-4 md:mb-5">
+            <span className="text-primary">رزرو</span> آنلاین
+          </h1>
+          <p className="type-lead text-muted-foreground max-w-2xl">
+            برای یک هفته آینده، از ساعت ۹ صبح تا ۱۹، بازه‌های دو ساعته در دسترس است. روز و زمان مناسب
+            را انتخاب کنید تا درخواست شما برای هماهنگی نهایی ثبت شود.
           </p>
         </header>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+          aria-describedby="booking-status"
+        >
           <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle>انتخاب روز و ساعت</CardTitle>
               <CardDescription>روز مورد نظر را انتخاب کرده و یکی از بازه‌های دو ساعته را برگزینید.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div>
-                <div className="mb-2 text-sm text-muted-foreground">روزهای هفته آینده</div>
-                <div className="flex flex-wrap gap-2">
+              <fieldset>
+                <legend className="mb-2 text-sm font-medium text-muted-foreground">روزهای هفته آینده</legend>
+                <div className="flex flex-wrap gap-2" role="group" aria-label="انتخاب روز">
                   {days.map((d, idx) => (
                     <Button
                       type="button"
                       key={idx}
                       variant={selectedDayIndex === idx ? "default" : "secondary"}
+                      aria-pressed={selectedDayIndex === idx}
                       onClick={() => {
                         setSelectedDayIndex(idx);
                         setSelectedSlotIndex(null);
+                        setStatusType("idle");
+                        setStatusMessage("");
                       }}
                     >
                       {formatPersianDate(d)}
                     </Button>
                   ))}
                 </div>
-              </div>
+              </fieldset>
 
-              <div>
-                <div className="mb-2 text-sm text-muted-foreground">بازه‌های زمانی</div>
-                <div className="flex flex-wrap gap-2">
+              <fieldset>
+                <legend className="mb-2 text-sm font-medium text-muted-foreground">بازه‌های زمانی</legend>
+                <div className="flex flex-wrap gap-2" role="group" aria-label="انتخاب ساعت">
                   {slots.map((s, idx) => (
                     <Button
                       type="button"
                       key={s.label}
                       disabled={selectedDayIndex === null}
                       variant={selectedSlotIndex === idx ? "default" : "outline"}
-                      onClick={() => setSelectedSlotIndex(idx)}
+                      aria-pressed={selectedSlotIndex === idx}
+                      onClick={() => {
+                        setSelectedSlotIndex(idx);
+                        setStatusType("idle");
+                        setStatusMessage("");
+                      }}
                     >
                       {s.label}
                     </Button>
                   ))}
                 </div>
+              </fieldset>
+
+              <div className="rounded-xl border border-border/70 bg-card/40 p-4 text-sm">
+                <p className="font-semibold mb-2">خلاصه انتخاب</p>
+                <p className="text-muted-foreground">
+                  روز انتخاب‌شده: {selectedDayLabel || "هنوز انتخاب نشده"}
+                </p>
+                <p className="text-muted-foreground">
+                  ساعت انتخاب‌شده: {selectedSlotLabel || "هنوز انتخاب نشده"}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -185,17 +212,24 @@ export default function BookingPage() {
                 ثبت درخواست رزرو
               </Button>
 
-              {submitted && (
-                <div className="text-sm rounded-md border p-3 bg-card/50">
-                  درخواست شما برای {selectedDayLabel}، بازه {selectedSlotLabel} ثبت شد. به زودی برای قطعی شدن
-                  تایم با شما تماس خواهیم گرفت.
-                </div>
-              )}
+              <div
+                id="booking-status"
+                aria-live="polite"
+                aria-atomic="true"
+                className={
+                  statusType === "idle"
+                    ? "sr-only"
+                    : statusType === "error"
+                      ? "text-sm rounded-md border border-destructive/40 p-3 bg-destructive/10 text-destructive"
+                      : "text-sm rounded-md border border-border p-3 bg-card/50"
+                }
+              >
+                {statusMessage}
+              </div>
             </CardContent>
           </Card>
         </form>
       </div>
-    </div>
     </section>
   );
 }

@@ -261,7 +261,6 @@ function HeroMobile() {
           src="/images/HeroMobile.png"
           alt="تعمیر تخصصی خودرو در خودرو پرشین"
           fill
-          priority
           sizes="100vw"
           className="object-cover object-center"
         />
@@ -291,7 +290,6 @@ function HeroDesktop() {
         src="/images/Hero2.png"
         alt="تعمیر تخصصی خودرو در خودرو پرشین"
         fill
-        priority
         sizes="100vw"
         className="object-cover object-center"
       />

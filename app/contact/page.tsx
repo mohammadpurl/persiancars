@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CONTACT, LINKS } from "@/lib/constants";
 import { createPageMetadata } from "@/lib/seo";
@@ -15,8 +14,8 @@ export const metadata = createPageMetadata({
 export default function ContactPage() {
   return (
     <section className="py-16" id="contact">
-      <div className="container py-16 mx-auto px-4">
-        <header className="mb-12 ">
+      <div className="container-site py-16">
+        <header className="mb-12">
           <h1 className="type-h1 mb-4 md:mb-5">
             <span className="text-primary">ارتباط</span> با ما
           </h1>
@@ -34,15 +33,15 @@ export default function ContactPage() {
             <CardContent className="space-y-4">
               <div>
                 <div className="text-sm text-muted-foreground mb-1">شماره تماس</div>
-                <Link href={`tel:${CONTACT.phone}`} className="text-primary hover:underline">
+                <a href={`tel:${CONTACT.phone}`} className="text-primary hover:underline">
                   {CONTACT.phoneDisplay}
-                </Link>
+                </a>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground mb-1">موبایل</div>
-                <Link href={`tel:${CONTACT.mobile}`} className="text-primary hover:underline">
+                <a href={`tel:${CONTACT.mobile}`} className="text-primary hover:underline">
                   {CONTACT.mobileDisplay}
-                </Link>
+                </a>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground mb-1">پیام در بله</div>
@@ -50,9 +49,9 @@ export default function ContactPage() {
               </div>
               <div>
                 <div className="text-sm text-muted-foreground mb-1">ایمیل</div>
-                <Link href={`mailto:${CONTACT.email}`} className="text-primary hover:underline">
+                <a href={`mailto:${CONTACT.email}`} className="text-primary hover:underline">
                   {CONTACT.email}
-                </Link>
+                </a>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground mb-1">ساعات کاری</div>
